@@ -1,3 +1,21 @@
+# Written by Margaret Kosmala <mkosmala@gmail.com> 2015-11-12
+# Adapted from Philip Brohan's code posted 2013-05-01 to 
+#    Zooniverse science team group blog
+# This version updates Philip's code to use the newer version
+#    of the treemap package
+#
+# This code will create a "treemap" visualization. It is useful
+# for showing the relative contributions of your users to your
+# Zooniverse project. Each square represents a user and the
+# size of the square is proportional to the number of 
+# classifications that user has done. 
+#
+# The input is a csv file containing one column that has unique
+# identifiers for each user (either an ID or username) and 
+# another column that indicates how many classifications each
+# user has done. 
+
+
 # run this once
 #install.packages('treemap')
 
