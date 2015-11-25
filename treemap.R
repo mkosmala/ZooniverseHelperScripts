@@ -13,7 +13,12 @@
 # The input is a csv file containing one column that has unique
 # identifiers for each user (either an ID or username) and 
 # another column that indicates how many classifications each
-# user has done. 
+# user has done. A column that specifies the color to make each
+# user's square is optional. Each value in the color column 
+# should be a string in the RGB hex format "#RRGGBB".
+#
+# The treemap reference document is here:
+# https://cran.r-project.org/web/packages/treemap/treemap.pdf
 
 
 # run this once
@@ -27,15 +32,22 @@ library(treemap)
 # ------------------
 
 # input file
-data_filename = 'questions_by_user_mod.csv'
+data_filename = 'by_user_session_stats_marking_2015-07-16_to_2015-11-12.csv'
 
 # put your column names here
 unique_ids = 'user_name'
-num_of_classifications = 'classifications'
+num_of_classifications = 'n_class'
+
+# If you want to specify user colors, set this to true and provide 
+# the column containing the hex RGB colors
+specify_colors = TRUE
+user_color = 'colors'
+# Otherwise, set specify_colors to false
+#specify_colors = FALSE
 
 # output file
-out_filename = 'questions_treemap.png'
-out_title = 'Season Spotter Questions - Nov 12, 2015'
+out_filename = 'marking_treemap_rev2.png'
+out_title = 'Season Spotter Image Marking - Nov 12, 2015'
 
 # ----------------------------
 # now you are ready to run all
@@ -49,12 +61,22 @@ ts = read.csv(data_filename,header=TRUE)
 png(file=out_filename,width=960,height=800)
 
 # create the visualization
-treemap(ts,
-        index=unique_ids,
-        vSize=num_of_classifications,
-        fontsize.labels=20,
-        title=out_title,
-        fontsize.title=25)
+if (specify_colors) {
+  treemap(ts,
+          index=unique_ids,
+          vSize=num_of_classifications,
+          vColor=user_color,
+          type="color",
+          title=out_title,
+          fontsize.title=25,
+          position.legend="none")
+} else {
+   treemap(ts,
+           index=unique_ids,
+           vSize=num_of_classifications,
+           title=out_title,
+           fontsize.title=25)
+}
 
 # close the output file
 dev.off()
